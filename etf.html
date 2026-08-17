@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="POMELO ETF 量化 - ETF 详情：K线、技术指标、量化评分">
+  <title>ETF 详情 - POMELO ETF 量化</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="etf">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">P</span>
+        <span>POMELO <small>ETF 量化</small></span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">市场仪表盘</a>
+        <a href="etf.html" class="active">ETF 详情</a>
+        <a href="strategy.html">策略实验室</a>
+        <a href="portfolio.html">持仓管理</a>
+        <a href="about.html">数据说明</a>
+      </nav>
+      <div class="user-box" id="userBox"></div>
+      <form class="header-search" id="searchForm">
+        <input type="text" id="searchInput" placeholder="输入ETF代码 如 510300" maxlength="20">
+        <button type="submit" aria-label="搜索">🔍</button>
+      </form>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <div id="pageNotice" class="notice info" style="display:none"></div>
+
+    <div class="quote-head">
+      <h1 id="etfName">加载中…</h1>
+      <span class="code" id="etfCode"></span>
+      <span class="muted" id="updatedAt" style="font-size:12px"></span>
+      <button class="btn btn-ghost btn-sm" id="btnStar">☆ 自选</button>
+      <button class="btn btn-ghost btn-sm" id="btnRefresh" style="margin-left:auto">🔄 刷新数据</button>
+      <a id="backtestLink" class="btn btn-accent btn-sm" href="strategy.html">用策略回测此 ETF →</a>
+    </div>
+    <div class="quote-price">
+      <span class="price num" id="price">-</span>
+      <span class="chg num" id="chg">-</span>
+    </div>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>K 线走势</h2>
+          <div class="tabs" id="periodTabs">
+            <button data-period="daily" class="active">日K</button>
+            <button data-period="weekly">周K</button>
+            <button data-period="monthly">月K</button>
+          </div>
+        </div>
+        <div id="klineChart" class="chart-box tall">
+          <div class="loading"><div class="spin"></div><div>加载 K 线数据…</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title"><h2>技术指标信号</h2><span class="sub">基于当前周期最新一根K线计算</span></div>
+        <div class="indicator-grid" id="indicatorGrid"></div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title"><h2>🔬 深度分析</h2><span class="sub">区间位置 · 多周期涨幅 · 波动率 · 均线结构 · 自动解读</span></div>
+        <div id="analysisPanel">
+          <div class="loading" style="padding:20px"><div class="spin"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="indicator-grid">
+          <div class="indicator-card" id="scorePanel" style="grid-column:1/-1">
+            <h3>综合量化评分（0-100）</h3>
+            <div class="loading" style="padding:10px"><div class="spin"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>POMELO ETF 量化分析 · 数据来自东方财富公开接口，仅供学习研究</span>
+      <span><a href="about.html">数据说明与免责声明</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/strategy.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

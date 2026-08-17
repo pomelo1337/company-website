@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="POMELO ETF 量化 - A股科技ETF量化分析平台：半导体、AI、通信、新能源等科技主题ETF行情、指标、评分与策略回测">
+  <title>POMELO 科技ETF 量化分析 | 精选推荐</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="index">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">P</span>
+        <span>POMELO <small>ETF 量化</small></span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html" class="active">市场仪表盘</a>
+        <a href="etf.html">ETF 详情</a>
+        <a href="strategy.html">策略实验室</a>
+        <a href="portfolio.html">持仓管理</a>
+        <a href="about.html">数据说明</a>
+      </nav>
+      <div class="user-box" id="userBox"></div>
+      <form class="header-search" id="searchForm">
+        <input type="text" id="searchInput" placeholder="输入ETF代码 如 510300" maxlength="20">
+        <button type="submit" aria-label="搜索">🔍</button>
+      </form>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <div id="pageNotice" class="notice info" style="display:none"></div>
+
+    <div class="page-head">
+      <div>
+        <h1>科技 ETF 专区</h1>
+        <p>A股 科技主题 ETF 精选与量化分析 · 点击任意卡片/行进入详情</p>
+      </div>
+      <div class="page-head-actions">
+        <span class="muted" id="updatedAt" style="font-size:12px"></span>
+        <button class="btn btn-ghost" id="btnRefresh">🔄 刷新数据</button>
+        <a href="strategy.html" class="btn btn-accent">进入策略实验室 →</a>
+      </div>
+    </div>
+
+    <section class="section-block">
+      <div class="hero-banner">
+        <div class="hero-copy">
+          <div class="hero-badge">A股 · 科技主题 · ETF 量化</div>
+          <h2>让数据说话，做更理性的科技 ETF 投资</h2>
+          <p>471 只科技 ETF 行情 · 技术指标 · 量化评分 · 9 种易懂策略回测 · 4 档风险风格配置</p>
+          <div class="hero-actions">
+            <a href="#etfList" class="btn btn-accent">浏览科技 ETF 行情</a>
+            <a href="strategy.html" class="btn btn-hero-ghost">打开策略实验室</a>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong class="num">471</strong><span>科技 ETF</span></div>
+          <div class="hero-stat"><strong class="num">9</strong><span>大科技主题</span></div>
+          <div class="hero-stat"><strong class="num">9</strong><span>种量化策略</span></div>
+          <div class="hero-stat"><strong class="num">4</strong><span>档风险风格</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>🎯 风险风格配置</h2>
+          <span class="sub">选择适合自己的风险档位，查看科技 ETF 配置建议 · 点击卡片切换</span>
+        </div>
+        <div class="risk-grid" id="riskGrid"></div>
+        <div id="riskDetail" class="risk-detail"></div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>⭐ 精选科技 ETF 推荐</h2>
+          <span class="sub">覆盖半导体、AI、新能源等核心科技赛道 · 点击查看详情</span>
+        </div>
+        <div class="index-grid" id="topPicks"></div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>科技相关指数</h2>
+          <span class="sub">科创与创业板科技指数 · 市场参考</span>
+        </div>
+        <div class="index-grid" id="indexCards">
+          <div class="loading" style="grid-column:1/-1"><div class="spin"></div><div>加载指数行情…</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>市场宽度</h2>
+          <span class="sub" id="distInfo">—</span>
+        </div>
+        <div id="distributionChart" class="chart-box" style="height:200px"></div>
+      </div>
+    </section>
+
+    <section class="section-block" id="etfList">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>科技 ETF 行情列表</h2>
+          <span class="sub">仅展示科技主题 ETF · 数据来源：东方财富公开接口 · 点击表头排序 · 量化评分基于当日动量/资金/活跃度/量能/规模</span>
+        </div>
+        <div class="toolbar">
+          <input type="text" id="etfSearch" placeholder="搜索代码/名称" style="width:200px">
+          <select id="themeFilter">
+            <option value="all">全部科技主题</option>
+            <option value="半导体">半导体</option>
+            <option value="AI/软件">AI/软件</option>
+            <option value="通信/5G">通信/5G</option>
+            <option value="新能源">新能源</option>
+            <option value="机器人/制造">机器人/制造</option>
+            <option value="电子/消费电子">电子/消费电子</option>
+            <option value="军工/航天">军工/航天</option>
+            <option value="传媒/游戏">传媒/游戏</option>
+            <option value="科创/宽基">科创/宽基</option>
+          </select>
+          <div class="spacer"></div>
+          <span class="muted" style="font-size:12px">红涨绿跌</span>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-sort="code" class="sortable">代码</th>
+                <th data-sort="name" class="sortable">名称</th>
+                <th data-sort="price" class="sortable">最新价</th>
+                <th data-sort="pct" class="sortable">涨跌幅</th>
+                <th data-sort="chg" class="sortable">涨跌额</th>
+                <th data-sort="amount" class="sortable">成交额</th>
+                <th data-sort="volume" class="sortable">成交量</th>
+                <th data-sort="turnover" class="sortable">换手率</th>
+                <th data-sort="mcap" class="sortable">规模</th>
+                <th data-sort="score" class="sortable">量化评分</th>
+              </tr>
+            </thead>
+            <tbody id="etfBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button class="btn btn-ghost btn-sm" id="pagePrev">← 上一页</button>
+          <span class="page-info" id="pageInfo">—</span>
+          <button class="btn btn-ghost btn-sm" id="pageNext">下一页 →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>POMELO ETF 量化分析 · 数据来自东方财富公开接口，仅供学习研究</span>
+      <span><a href="about.html">数据说明与免责声明</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/strategy.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

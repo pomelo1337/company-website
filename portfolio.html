@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="POMELO ETF 量化 - 持仓管理：组合盈亏、持仓明细、仓位分布与风格化操作建议">
+  <title>持仓管理 - POMELO ETF 量化</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="portfolio">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">P</span>
+        <span>POMELO <small>ETF 量化</small></span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">市场仪表盘</a>
+        <a href="etf.html">ETF 详情</a>
+        <a href="strategy.html">策略实验室</a>
+        <a href="portfolio.html" class="active">持仓管理</a>
+        <a href="about.html">数据说明</a>
+      </nav>
+      <div class="user-box" id="userBox"></div>
+      <form class="header-search" id="searchForm">
+        <input type="text" id="searchInput" placeholder="输入ETF代码 如 512480" maxlength="20">
+        <button type="submit" aria-label="搜索">🔍</button>
+      </form>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <div id="pageNotice" class="notice info" style="display:none"></div>
+
+    <div class="page-head">
+      <div>
+        <h1>持仓管理</h1>
+        <p>记录你的科技 ETF 持仓，实时查看盈亏与风格化操作建议（数据保存在本机浏览器）</p>
+      </div>
+      <div class="page-head-actions">
+        <span class="muted" id="updatedAt" style="font-size:12px"></span>
+        <button class="btn btn-ghost" id="btnRefresh">🔄 刷新数据</button>
+      </div>
+    </div>
+
+    <!-- 自选股 -->
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>⭐ 自选股</h2>
+          <span class="sub">在 ETF 详情页点 ☆ 添加自选 · 点击跳转详情</span>
+        </div>
+        <div id="watchlistBox" class="pick-wrap">
+          <span class="muted" style="font-size:13px">暂无自选，去 ETF 详情页点 ☆ 添加</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 组合概览 -->
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>组合概览</h2>
+          <span class="sub">切换风险风格，获取对应的操作建议</span>
+        </div>
+        <div class="style-chips" id="styleChips"></div>
+        <div class="stat-grid" id="pfSummary"></div>
+      </div>
+    </section>
+
+    <!-- 持仓明细 -->
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>持仓明细</h2>
+          <span class="sub">添加后自动获取现价与名称 · 数据保存在本机浏览器</span>
+        </div>
+        <div class="pf-form" id="pfForm">
+          <input type="text" id="pfCode" placeholder="ETF代码(6位)" maxlength="6" style="width:110px">
+          <input type="number" id="pfShares" placeholder="数量(份)" min="1" style="width:120px">
+          <input type="number" id="pfCost" placeholder="成本价(元)" min="0.001" step="0.001" style="width:120px">
+          <input type="date" id="pfDate" style="width:150px">
+          <button class="btn btn-accent" id="pfAdd">＋ 添加持仓</button>
+        </div>
+        <div id="pfEmpty" class="loading" style="display:none">
+          <div style="font-size:34px;margin-bottom:10px">📭</div>
+          <div>还没有持仓记录，添加第一笔持仓开始管理吧</div>
+        </div>
+        <div id="pfTableWrap" class="table-wrap" style="display:none">
+          <table class="data-table" id="pfTable"></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 仓位分布 + 操作建议 -->
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title"><h2>仓位主题分布</h2><span class="sub">按持仓市值统计</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center" class="pf-dist-grid">
+          <div id="allocChart" class="chart-box" style="height:260px"></div>
+          <div id="allocLegend"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title"><h2>📋 操作建议</h2><span class="sub" id="adviceStyleName"></span></div>
+        <div id="pfFeature" class="notice info" style="display:none"></div>
+        <div class="advice-grid">
+          <div class="advice-box">
+            <h3>📏 组合纪律</h3>
+            <ul id="adviceRules"></ul>
+          </div>
+          <div class="advice-box">
+            <h3>🔄 操作节奏</h3>
+            <p id="adviceRhythm" class="muted" style="line-height:2"></p>
+          </div>
+        </div>
+        <div class="advice-box" id="adviceTiers" style="margin-top:16px; display:none"></div>
+        <div class="advice-box" style="margin-top:16px">
+          <h3>💡 逐笔持仓建议</h3>
+          <div class="table-wrap"><table class="data-table" id="adviceTable"></table></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>POMELO ETF 量化分析 · 数据来自东方财富公开接口，仅供学习研究</span>
+      <span><a href="about.html">数据说明与免责声明</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/strategy.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

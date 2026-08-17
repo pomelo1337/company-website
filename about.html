@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="POMELO ETF 量化 - 数据说明与免责声明">
+  <title>数据说明 - POMELO ETF 量化</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="about">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">P</span>
+        <span>POMELO <small>ETF 量化</small></span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">市场仪表盘</a>
+        <a href="etf.html">ETF 详情</a>
+        <a href="strategy.html">策略实验室</a>
+        <a href="portfolio.html">持仓管理</a>
+        <a href="about.html" class="active">数据说明</a>
+      </nav>
+      <div class="user-box" id="userBox"></div>
+      <form class="header-search" id="searchForm">
+        <input type="text" id="searchInput" placeholder="输入ETF代码 如 510300" maxlength="20">
+        <button type="submit" aria-label="搜索">🔍</button>
+      </form>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <div id="pageNotice" class="notice info" style="display:none"></div>
+    <div class="page-head">
+      <div>
+        <h1>数据说明</h1>
+        <p>POMELO ETF 量化分析平台 · 功能与数据来源说明</p>
+      </div>
+      <div class="page-head-actions">
+        <span class="muted" id="updatedAt" style="font-size:12px"></span>
+        <button class="btn btn-ghost" id="btnRefresh">🔄 刷新数据</button>
+      </div>
+    </div>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="about-section">
+          <h2>平台功能</h2>
+          <ul>
+            <li><b>市场仪表盘</b>：<b>聚焦 A股 科技主题 ETF</b>（半导体、AI/软件、通信/5G、新能源、机器人、军工航天等九大主题），含"精选科技 ETF 推荐"、主要指数实时行情、科技 ETF 行情列表（搜索/主题筛选/排序/分页）、涨跌分布统计。</li>
+            <li><b>ETF 详情</b>：单只 ETF 实时快照、日/周/月 K 线图（含 MA5/10/20/60 均线、成交量、MACD 副图），以及 MA、MACD、RSI、KDJ、布林带等技术指标信号与综合量化评分。</li>
+            <li><b>策略实验室</b>：内置双均线趋势、均线保护、RSI 反转、布林带突破、定投、智能定投、移动止盈、网格交易、多 ETF 动量轮动九种策略，每个策略配有白话说明与适合人群，可调参数、选择回测区间，输出总收益、年化、最大回撤、夏普比率、胜率、交易次数与净值曲线，并支持全部策略横向对比。</li>
+          </ul>
+        </div>
+        <div class="about-section">
+          <h2>数据来源</h2>
+          <ul>
+            <li>行情与 K 线数据来自<b>东方财富公开行情接口</b>（push2.eastmoney.com），非付费数据，仅供个人学习研究。</li>
+            <li>K 线为<b>前复权</b>数据，覆盖 ETF 上市以来全部历史（日线最多加载约 5000 根）。</li>
+            <li>行情数据存在延迟，且接口可能因风控或网络原因暂不可用；此时页面会回退到本地快照或提示错误，请稍后刷新。</li>
+            <li>ETF 类型标签（股票/债券/商品/跨境）根据名称关键词自动归类，仅供参考。</li>
+          </ul>
+        </div>
+        <div class="about-section">
+          <h2>回测说明</h2>
+          <ul>
+            <li>回测基于收盘价撮合，策略信号在信号日<b>收盘价</b>成交。</li>
+            <li>费率假设：单边 0.06%（佣金 + 滑点近似，ETF 无印花税），定投与网格策略按相同费率计。</li>
+            <li>动量轮动策略按共同交易日对齐多只 ETF，定期按动量排序调仓。</li>
+            <li>回测结果仅反映历史数据，<b>不代表未来收益</b>，且未考虑流动性、停牌、涨跌停无法成交等真实约束。</li>
+          </ul>
+        </div>
+        <div class="about-section">
+          <h2>技术栈</h2>
+          <div class="tag-list">
+            <span class="tag">纯静态站点 · 零服务器</span>
+            <span class="tag">原生 JavaScript</span>
+            <span class="tag">ECharts 5 图表</span>
+            <span class="tag">浏览器直连公开行情接口</span>
+            <span class="tag">GitHub Pages 托管</span>
+          </div>
+        </div>
+        <div class="disclaimer">
+          <b>免责声明</b>：本站所有内容（行情、指标、评分、回测结果）均由公开数据与程序自动计算生成，仅供量化学习与研究参考，<b>不构成任何投资建议</b>。股市有风险，投资需谨慎。据此操作，风险自担。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>POMELO ETF 量化分析 · 数据来自东方财富公开接口，仅供学习研究</span>
+      <span><a href="about.html">数据说明与免责声明</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/strategy.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

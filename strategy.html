@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="POMELO ETF 量化 - 策略实验室：双均线、RSI反转、布林突破、定投、网格、动量轮动回测">
+  <title>策略实验室 - POMELO ETF 量化</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="strategy">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">P</span>
+        <span>POMELO <small>ETF 量化</small></span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">市场仪表盘</a>
+        <a href="etf.html">ETF 详情</a>
+        <a href="strategy.html" class="active">策略实验室</a>
+        <a href="portfolio.html">持仓管理</a>
+        <a href="about.html">数据说明</a>
+      </nav>
+      <div class="user-box" id="userBox"></div>
+      <form class="header-search" id="searchForm">
+        <input type="text" id="searchInput" placeholder="输入ETF代码 如 510300" maxlength="20">
+        <button type="submit" aria-label="搜索">🔍</button>
+      </form>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <div id="pageNotice" class="notice info" style="display:none"></div>
+
+    <div class="page-head">
+      <div>
+        <h1>策略实验室</h1>
+        <p>选择策略与参数，对 ETF 历史数据进行回测（日线 · 前复权）</p>
+      </div>
+      <span class="muted" id="strategyName" style="font-size:13px"></span>
+    </div>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="toolbar">
+          <input type="text" id="etfInput" placeholder="科技ETF代码，如 512480" style="width:190px" value="512480">
+          <button class="btn btn-ghost" id="btnLoad">加载数据</button>
+          <button class="btn btn-ghost" id="btnRefresh">🔄 刷新数据</button>
+          <span class="muted" id="updatedAt" style="font-size:12px"></span>
+          <select id="rangeSelect">
+            <option value="y1">近 1 年</option>
+            <option value="y3" selected>近 3 年</option>
+            <option value="y5">近 5 年</option>
+            <option value="all">全部历史</option>
+          </select>
+          <div class="spacer"></div>
+          <span class="muted" style="font-size:12px">初始资金 ¥100,000</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="panel">
+        <div class="panel-title"><h2>选择策略</h2><span class="sub">点击切换，下方可调参数</span></div>
+        <div class="strategy-select" id="strategyGrid"></div>
+        <div id="strategyExplain" class="strategy-explain"></div>
+        <div class="param-grid" id="paramGrid"></div>
+        <div class="toolbar" id="momentumPanel" style="display:none; border-top:1px solid var(--border); padding-top:14px">
+          <label>轮动 ETF 代码（逗号分隔，至少 2 只）：</label>
+          <input type="text" id="momentumCodes" placeholder="512480,159995,159819,588000,515880" style="width:320px" value="512480,159995,159819,588000,515880">
+        </div>
+        <div class="toolbar">
+          <button class="btn btn-accent" id="btnRun">▶ 运行回测</button>
+          <button class="btn btn-ghost" id="btnCompare">⚡ 全部策略对比</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="resultWrap">
+      <div class="panel">
+        <div class="panel-title"><h2>回测结果</h2><span class="sub" id="resultLabel"></span></div>
+        <div class="metrics-grid" id="metricsGrid"></div>
+        <div id="equityChart" class="chart-box tall">
+          <div class="loading"><div class="spin"></div><div>运行回测后显示净值曲线</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="tradesWrap" style="display:none">
+      <div class="panel">
+        <div class="panel-title"><h2>最近交易记录</h2><span class="sub">最近 20 笔卖出</span></div>
+        <div class="table-wrap">
+          <table class="data-table" id="tradesTable"></table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="compareWrap" style="display:none">
+      <div class="panel">
+        <div class="panel-title"><h2>策略横向对比（默认参数）</h2><span class="sub">单资产策略 vs 买入持有</span></div>
+        <div class="table-wrap" style="margin-bottom:16px">
+          <table class="data-table compare-table" id="compareTable"></table>
+        </div>
+        <div id="compareChart" class="chart-box tall"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>POMELO ETF 量化分析 · 数据来自东方财富公开接口，仅供学习研究</span>
+      <span><a href="about.html">数据说明与免责声明</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/strategy.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
